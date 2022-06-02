@@ -3,6 +3,9 @@ const sha256 = require('sha256')
 function Blockchain() {
     this.chain = [];
     this.pendingTransactions = [];
+
+    // Creating genesis work
+    this.createNewBlock(100, '0', '0');
 }
 
 // We could have chosen to go with the class instead of constructor function.
@@ -51,7 +54,7 @@ Blockchain.prototype.hashBlock = function (previousBlockHash, currentBlockData, 
     return hash;
 }
 
-Blockchain.prototype.proofOfWork = function(previousBlockHash, currentBlockData){
+Blockchain.prototype.proofOfWork = function (previousBlockHash, currentBlockData) {
     // bitcoin.hashBlock(previousBlockHash, currentBlockData, nonce);
     // => repeatedly hash block until it finds correct hash (starting with 4 zeros) => '0000OIANDJHFOWSED0'
     // => uses current block data for hash, but also the previousHash
@@ -60,7 +63,7 @@ Blockchain.prototype.proofOfWork = function(previousBlockHash, currentBlockData)
 
     let nonce = 0;
     let hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
-    while(hash.substring(0,4)!=='0000') {
+    while (hash.substring(0, 4) !== '0000') {
         nonce++;
         hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
     }
