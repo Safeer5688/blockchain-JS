@@ -51,4 +51,21 @@ Blockchain.prototype.hashBlock = function (previousBlockHash, currentBlockData, 
     return hash;
 }
 
+Blockchain.prototype.proofOfWork = function(previousBlockHash, currentBlockData){
+    // bitcoin.hashBlock(previousBlockHash, currentBlockData, nonce);
+    // => repeatedly hash block until it finds correct hash (starting with 4 zeros) => '0000OIANDJHFOWSED0'
+    // => uses current block data for hash, but also the previousHash
+    // => continuously changes nonce value until it finds the correct hash
+    // => returns to us the nonce value that creates the correct hash
+
+    let nonce = 0;
+    let hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
+    while(hash.substring(0,4)!=='0000') {
+        nonce++;
+        hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
+    }
+
+    return nonce;
+}
+
 module.exports = Blockchain;
