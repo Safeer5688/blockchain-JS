@@ -201,7 +201,7 @@ app.get('/consensus', function(req, res){
         blockchains.forEach(blockchain => {
             if (blockchain.chain.length > maxChainLength){
                 maxChainLength = blockchain.chain.length;
-                newLongestChain = blockchain;
+                newLongestChain = blockchain.chain;
                 newPendingTransactions = blockchain.pendingTransactions;
             }
         });
